@@ -1,0 +1,10 @@
+{
+  "name": "SubControl — Контроль подписок",
+  "short_name": "SubControl",
+  "description": "Сервис автоматического учёта подписок, таймер триалов и защита бюджета",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#090D14",
+  "theme_color": "#090D14",
+  "orientation": "portrait"
+}

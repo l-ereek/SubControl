@@ -1,0 +1,9 @@
+{
+  "appId": "ru.subcontrol.app",
+  "appName": "SubControl",
+  "webDir": "www",
+  "bundledWebRuntime": false,
+  "server": {
+    "androidScheme": "https"
+  }
+}
