@@ -1,0 +1,8 @@
+version: '3.8'
+services:
+  subcontrol-api:
+    build: .
+    container_name: subcontrol_backend
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
