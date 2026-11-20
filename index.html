@@ -3,19 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>SubControl</title>
-  <meta name="theme-color" content="#090D14" />
+  <title>SubControl — Умный контроль подписок</title>
+  <meta name="theme-color" content="#0A0D14" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css"/>
-
+  <link rel="manifest" href="manifest.json" />
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <script src="script.js"></script>
-  <!-- Верхняя панель для удобного переключения на компьютере -->
+  <!-- Верхняя панель переключения для демонстрации на ПК -->
   <div class="demo-toolbar">
     <div id="apiBadge" class="api-badge">
       <span class="status-dot"></span>
@@ -31,11 +31,28 @@
 
   <!-- Мобильный фрейм SubControl -->
   <div class="phone-frame">
-    <!-- Статус-бар -->
+    <!-- Прозрачный статус-бар поверх фона -->
     <div class="status-bar">
-      <span>09:41</span>
-      <div class="dynamic-island"></div>
-      <span>5G 100%</span>
+      <span class="status-time">09:41</span>
+      <div class="status-icons">
+        <svg width="17" height="12" viewBox="0 0 17 12" fill="currentColor">
+          <rect x="0" y="8" width="3" height="4" rx="1"/>
+          <rect x="4.5" y="5.5" width="3" height="6.5" rx="1"/>
+          <rect x="9" y="3" width="3" height="9" rx="1"/>
+          <rect x="13.5" y="0" width="3" height="12" rx="1"/>
+        </svg>
+        <svg width="16" height="20" viewBox="0 0 16 12" fill="none">
+          <path d="M8 9.6a1.4 1.4 0 1 0 0 2.8 1.4 1.4 0 0 0 0-2.8z" fill="currentColor"/>
+          <path d="M4.8 7.5a4.6 4.6 0 0 1 6.4 0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          <path d="M2.2 4.8a8.2 8.2 0 0 1 11.6 0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          <path d="M0.6 2.3a11 11 0 0 1 14.8 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.45"/>
+        </svg>
+        <svg width="25" height="12" viewBox="0 0 25 12" fill="none">
+          <rect x="0.75" y="0.75" width="20.5" height="10.5" rx="3" stroke="currentColor" stroke-width="1.4" opacity="0.5"/>
+          <rect x="2.5" y="2.5" width="17" height="7" rx="1.6" fill="currentColor"/>
+          <path d="M22.8 4v4a1.4 1.4 0 0 0 0-4z" fill="currentColor" opacity="0.6"/>
+        </svg>
+      </div>
     </div>
 
     <!-- Всплывающее уведомление -->
@@ -45,9 +62,9 @@
     </div>
 
     <!-- ==========================================================
-         ЭКРАН 1: ВХОД (Изумрудный + Стопки монет с ростками)
+         ЭКРАН 1: ВХОД
          ========================================================== -->
-    <div id="screen-login" class="screen auth-bg">
+    <div id="screen-login" class="screen auth-bg-login">
       <div class="auth-top">
         <div class="auth-subcontrol">SubControl</div>
         <div class="auth-ras">идеальный сервис для расставаний</div>
@@ -112,15 +129,32 @@
     <!-- ==========================================================
          ЭКРАН 2: РЕГИСТРАЦИЯ
          ========================================================== -->
-    <div id="screen-register" class="screen auth-bg">
+    <div id="screen-register" class="screen auth-bg auth-bg-register">
       <div class="auth-top compact">
-        <button class="auth-back-btn" onclick="openAuthScreen('screen-login')">← Вернуться</button>
+        <button class="auth-back-btn" onclick="openAuthScreen('screen-login')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+          <span>Вернуться</span>
+        </button>
+
         <svg class="coins-illustration" style="width:110px; height:125px; bottom:-12px;" viewBox="0 0 140 160" fill="none">
           <ellipse cx="70" cy="146" rx="54" ry="7" fill="#CBD5E1"/>
-          <rect x="34" y="104" width="28" height="38" rx="4" fill="#E2E8F0" stroke="#072623" stroke-width="2"/>
-          <rect x="70" y="84" width="32" height="58" rx="5" fill="#F8FAFC" stroke="#072623" stroke-width="2"/>
-          <path d="M86 84V38" stroke="#00E676" stroke-width="3" stroke-linecap="round"/>
-          <path d="M86 60C86 60 64 48 66 36C68 24 86 44 86 44" fill="#00E676" fill-opacity="0.65" stroke="#072623" stroke-width="2"/>
+          <g transform="translate(0, 4)">
+            <path d="M86 60C86 60 64 48 66 36C68 24 86 44 86 44" fill="#00E676" fill-opacity="0.65" stroke="#072623" stroke-width="2"/>
+            <path d="M86 87V38" stroke="#00E676" stroke-width="3" stroke-linecap="round"/>
+            <rect x="70" y="87" width="32" height="58" rx="5" fill="#fffb9e" stroke="#072623" stroke-width="2"/>
+            <line x1="70" y1="95" x2="102" y2="95" stroke="#072623" stroke-width="2"/>
+            <line x1="70" y1="106" x2="102" y2="106" stroke="#072623" stroke-width="2"/>
+            <line x1="70" y1="117" x2="102" y2="117" stroke="#072623" stroke-width="2"/>
+            <line x1="70" y1="128" x2="102" y2="128" stroke="#072623" stroke-width="2"/>
+            <line x1="70" y1="139" x2="102" y2="139" stroke="#072623" stroke-width="2"/>
+            <rect x="34" y="106" width="28" height="38" rx="4" fill="#fffa7a" stroke="#072623" stroke-width="2"/>
+            <line x1="34" y1="115" x2="62" y2="115" stroke="#072623" stroke-width="2"/>
+            <line x1="34" y1="126" x2="62" y2="126" stroke="#072623" stroke-width="2"/>
+            <line x1="34" y1="137" x2="62" y2="137" stroke="#072623" stroke-width="2"/>
+          </g>
         </svg>
       </div>
 
@@ -130,13 +164,13 @@
           <input id="regEmail" class="auth-input" type="email" placeholder="Email" />
         </div>
         <div class="auth-input-wrap">
+          <input id="regPhone" class="auth-input" type="tel" placeholder="Телефон" />
+        </div>
+        <div class="auth-input-wrap">
           <input id="regPass" class="auth-input" type="password" placeholder="Пароль" />
         </div>
         <div class="auth-input-wrap">
           <input id="regConfirm" class="auth-input" type="password" placeholder="Повторите пароль" />
-        </div>
-        <div class="auth-input-wrap">
-          <input id="regPhone" class="auth-input" type="tel" placeholder="Телефон" />
         </div>
         <button class="auth-submit-btn" style="margin-top: 8px;" onclick="handleRegister()">Зарегистрироваться</button>
 
@@ -147,45 +181,61 @@
     </div>
 
     <!-- ==========================================================
-         ЭКРАН 3: ГЛАВНАЯ (Единый список подписок + Сохранение денег)
+         ЭКРАН 3: ГЛАВНАЯ
          ========================================================== -->
     <div id="screen-home" class="screen active">
-      <div class="app-pad">
+      <div class="app-pad home-pad">
         <div class="top-header">
           <div class="page-title">Главная</div>
           <button class="pill-outline-btn" onclick="switchTab('screen-templates', 2)">Добавить +</button>
         </div>
 
         <div class="month-summary">
-          <div class="month-label">В этом месяце уходит</div>
+          <div class="month-label">В этом месяце</div>
           <div class="month-amount" id="monthlyTotalText">1 886 ₽</div>
-          <div class="month-sub" id="yearlyForecastText">Прогноз на год: 22 632 ₽</div>
         </div>
 
-        <!-- Изумрудная плашка копилки сэкономленных денег -->
-        <div class="Savings-Banner" onclick="toggleRingView()" title="Нажмите, чтобы переключить вид (Плашка / Кольцо)">
-          <div class="savings-left">
-            <span>Сберегли в ноябре</span>
-            <h3 id="savedMonthText">+1 190 ₽</h3>
-            <p>✓ 3 карты под защитой • Нажмите для смены вида</p>
+        <!-- Неоновое кольцо экономии в центре (как на Frame 1 макета) -->
+        <div class="hero-ring-wrap">
+          <div class="ring-glow"></div>
+          <svg class="hero-ring-svg" viewBox="0 0 240 240">
+            <defs>
+              <linearGradient id="ringEmeraldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#34D399"/>
+                <stop offset="55%" stop-color="#00E676"/>
+                <stop offset="100%" stop-color="#10B981"/>
+              </linearGradient>
+              <filter id="ringNeonGlow" x="-30%" y="-30%" width="160%" height="160%">
+                <feGaussianBlur stdDeviation="7" result="blur"/>
+                <feMerge>
+                  <feMergeNode in="blur"/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
+            </defs>
+            <!-- Тёмная подложка кольца -->
+            <circle cx="120" cy="120" r="96" fill="none" stroke="#242E3E" stroke-width="14"/>
+            <!-- Светящаяся изумрудная дуга -->
+            <circle id="ringProgressArc" cx="120" cy="120" r="96" fill="none"
+                    stroke="url(#ringEmeraldGrad)" stroke-width="14" stroke-linecap="round"
+                    stroke-dasharray="603" stroke-dashoffset="125"
+                    transform="rotate(-90 120 120)" filter="url(#ringNeonGlow)"/>
+          </svg>
+          <div class="hero-ring-center">
+            <div class="ring-saved-val" id="ringSavedVal">5 886 ₽</div>
+            <div class="ring-saved-lbl">
+              <span class="ring-accent">Сберегли</span> vs <span class="ring-muted">Траты</span>
+            </div>
+            <div class="ring-year-sub" id="yearlyForecastText">Прогноз на год: 22 632 ₽</div>
           </div>
-          <div style="font-size: 32px;">🌱</div>
         </div>
 
-        <!-- Неоновое кольцо (скрыто по умолчанию, открывается по клику на плашку) -->
-        <div id="ringBlock" class="ring-container" style="display: none;">
-          <div class="neon-ring">
-            <div class="ring-saved-val" id="ringSavedVal">+1 190 ₽</div>
-            <div class="ring-saved-lbl">Спасено за месяц</div>
-          </div>
-        </div>
-
-        <!-- Горящий триал -->
+        <!-- Компактная красная плашка горящего триала -->
         <div id="urgentTrialContainer"></div>
 
-        <!-- Единый список активных подписок со всех карт -->
-        <div class="section-head">
-          <h4 id="subsCountTitle">Единый список подписок (5)</h4>
+        <!-- Скрытая под первым экраном лента активных подписок (доступна при скролле) -->
+        <div class="section-head" style="margin-top: 22px;">
+          <h4 id="subsCountTitle">Активные подписки (5)</h4>
           <span onclick="switchTab('screen-calendar', 1)">Календарь →</span>
         </div>
         <div id="subscriptionsList"></div>
@@ -193,186 +243,368 @@
     </div>
 
     <!-- ==========================================================
-         ЭКРАН 4: КАЛЕНДАРЬ (С зелёными ветками и таймлайном)
+         ЭКРАН 4: КАЛЕНДАРЬ
          ========================================================== -->
     <div id="screen-calendar" class="screen">
       <div class="app-pad">
-        <div class="top-header">
+        <div class="top-header" style="margin-bottom: 14px;">
           <div class="page-title">Календарь</div>
-          <div style="border: 1px solid var(--border-dark); padding: 6px 10px; border-radius: 8px; font-size: 12px; color: var(--neon-green); font-weight: 700;">НОЯ</div>
+          <button class="header-icon-btn" onclick="openYearCalendarModal()" title="Выбрать дату и год">
+            <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="17" rx="3"/>
+              <line x1="16" y1="2" x2="16" y2="6"/>
+              <line x1="8" y1="2" x2="8" y2="6"/>
+              <line x1="3" y1="10" x2="21" y2="10"/>
+            </svg>
+          </button>
         </div>
 
-        <div style="font-size: 13px; color: var(--text-gray);">Ближайшие даты</div>
-
-        <!-- Лента дат 15..22 -->
-        <div class="date-strip" id="calendarStrip">
-          <div class="date-num">15</div>
-          <div class="date-num has-payment">16</div>
-          <div class="date-num">17</div>
-          <div class="date-num active">18</div>
-          <div class="date-num">19</div>
-          <div class="date-num has-payment">20</div>
-          <div class="date-num">21</div>
-          <div class="date-num">22</div>
+        <div class="cal-month-row">
+          <button class="cal-month-trigger" onclick="openYearCalendarModal()">
+            <span id="calendarMonthLabel">Ноябрь 2026</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </button>
+          <button id="calTodayBtn" class="cal-today-chip" onclick="jumpToToday()">Сегодня • 18</button>
         </div>
 
-        <!-- Фирменные зелёные линии-ветки под датами -->
-        <svg class="branch-svg" viewBox="0 0 380 44" fill="none">
-          <path d="M112 2V28H162" stroke="#64748B" stroke-width="2"/>
-          <path d="M162 0V42" stroke="#00E676" stroke-width="3"/>
-          <path d="M210 2V20H162" stroke="#00E676" stroke-width="2"/>
-          <path d="M258 2V32H162" stroke="#00E676" stroke-width="2"/>
-          <line x1="0" y1="42" x2="380" y2="42" stroke="#243042" stroke-width="1"/>
-        </svg>
-
-        <div class="section-head">
-          <h4 style="font-size: 17px;">Скоро спишут</h4>
-          <span id="calendarTotalText">1 886 ₽</span>
+        <div class="calendar-ribbon-viewport" id="calendarScrollViewport">
+          <div class="calendar-ribbon-track" id="calendarRibbonTrack">
+            <div class="date-strip-scroll" id="calendarStrip"></div>
+            <svg id="calendarBranchSvg" class="branch-svg" fill="none" xmlns="http://www.w3.org/2000/svg"></svg>
+          </div>
         </div>
 
-        <div class="timeline-wrap">
-          <div class="timeline-line"></div>
+        <div id="selectedDayBanner" class="selected-day-banner"></div>
+
+        <div class="section-head" style="margin-bottom: 14px;">
+          <h4 id="calendarListTitle" class="calendar-list-title">Списания в ноябре</h4>
+          <span id="calendarTotalText" class="calendar-total-pill">1 886 ₽</span>
+        </div>
+
+        <div class="timeline-wrap" id="calendarTimelineWrap">
+          <div class="timeline-line" id="calendarTimelineLine"></div>
           <div id="calendarTimeline"></div>
         </div>
       </div>
     </div>
 
     <!-- ==========================================================
-         ЭКРАН 5: ШАБЛОНЫ (В 1 клик + Поиск по СМС)
+         ЭКРАН 5: ШАБЛОНЫ
          ========================================================== -->
     <div id="screen-templates" class="screen">
       <div class="app-pad">
-        <div class="top-header">
+        <div class="top-header" style="margin-bottom: 16px;">
           <div class="page-title">Шаблоны</div>
         </div>
 
-        <div style="font-size: 20px; font-weight: 800;">Добавить в 1 клик</div>
+        <div class="catalog-subtitle">Каталог шаблонов</div>
 
-        <!-- Быстрые кружки брендов -->
+        <!-- Быстрые кнопки добавления -->
         <div class="quick-row">
-          <button class="pill-outline-btn" onclick="promptCustomSub()">+ Свой</button>
-          <button class="brand-circle" style="background:#EF4444;" onclick="addFromTemplate(1)">Я</button>
-          <button class="brand-circle" style="background:#38BDF8;" onclick="addFromTemplate(2)">TG</button>
-          <button class="brand-circle" style="background:#2563EB;" onclick="addFromTemplate(3)">VK</button>
-          <button class="brand-circle" style="background:#E11D48;" onclick="addFromTemplate(5)">И</button>
+          <button class="pill-outline-btn" onclick="openSubModal(null)">+ Свой</button>
+          <button class="brand-circle" style="background:#EF4444;" onclick="openSubModal(1)" title="Яндекс Плюс">Я</button>
+          <button class="brand-circle" style="background:#38BDF8;" onclick="openSubModal(2)" title="Telegram Premium">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="#FFFFFF">
+              <path d="M21.9 4.6c.3-1.2-.5-1.8-1.5-1.4L2.6 10.1c-1.2.5-1.2 1.2-.2 1.5l4.6 1.4 10.6-6.7c.5-.3 1-.1.6.2l-8.6 7.8-.3 4.6c.5 0 .7-.2 1-.5l2.3-2.2 4.8 3.5c.9.5 1.5.2 1.7-.8l2.8-14.3z"/>
+            </svg>
+          </button>
+          <button class="brand-circle" style="background:#2563EB; font-size:12px;" onclick="openSubModal(3)" title="ВК Музыка">VK</button>
+          <button class="brand-circle" style="background:#EA003D; font-size:13px; font-weight:800; letter-spacing:-0.4px;" onclick="openSubModal(5)" title="Иви">ivi</button>
         </div>
 
-        <!-- Строка автопоиска по СМС -->
-        <div class="sms-box">
-          <span>🔍</span>
-          <input id="smsInput" class="sms-input" type="text" placeholder="Поиск по СМС (вставьте текст банка)..." />
+        <!-- Поле поиска по СМС -->
+        <div class="sms-box" style="margin-bottom: 22px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          <input id="smsInput" class="sms-input" type="text" placeholder="Поиск по СМС"
+                onkeydown="if(event.key==='Enter') handleParseSMS()" />
           <button class="sms-btn" onclick="handleParseSMS()">Найти</button>
         </div>
-        <div style="margin: -10px 0 14px; font-size: 11px; color: var(--text-dim); cursor: pointer;" onclick="fillDemoSMS()">
-          💡 Нажмите, чтобы подставить пример СМС от СберБанка
-        </div>
 
-        <!-- 4 минималистичные категории -->
-        <div id="templateCategories">
-          <div class="cat-row" onclick="addFromTemplate(1)">
-            <span>Популярные (Яндекс Плюс — 399 ₽)</span>
-            <span>+ ›</span>
+        <!-- Список популярных подписок -->
+        <div class="popular-section-title">Популярное:</div>
+        <div id="templateCategories" class="cat-list">
+          <div class="cat-row" onclick="openSubModal(1)">
+            <span>Яндекс Плюс</span>
+            <span class="cat-price">399 ₽ <span class="cat-chevron">›</span></span>
           </div>
-          <div class="cat-row" onclick="addFromTemplate(3)">
-            <span>Студентам -50% (ВК Музыка — 99 ₽)</span>
-            <span style="color: var(--neon-green);">+ ›</span>
+          <div class="cat-row" onclick="openSubModal(3)">
+            <span>ВК Музыка</span>
+            <span class="cat-price">99 ₽ <span class="cat-chevron">›</span></span>
           </div>
-          <div class="cat-row" onclick="addFromTemplate(4)">
-            <span>Молодёжный (СберПрайм — 149 ₽)</span>
-            <span style="color: var(--neon-green);">+ ›</span>
+          <div class="cat-row" onclick="openSubModal(4)">
+            <span>СберПрайм</span>
+            <span class="cat-price">149 ₽ <span class="cat-chevron">›</span></span>
           </div>
-          <div class="cat-row" onclick="addFromTemplate(6)">
-            <span>Связь и софт (МТС Premium — 249 ₽)</span>
-            <span>+ ›</span>
+          <div class="cat-row" onclick="openSubModal(6)">
+            <span>МТС Premium</span>
+            <span class="cat-price">249 ₽ <span class="cat-chevron">›</span></span>
           </div>
-        </div>
-
-        <!-- Зелёная карточка оптимизации -->
-        <div class="tip-green-card">
-          <h4>Совет:</h4>
-          <h5>Смени тариф на студ.</h5>
-          <p>Плати в 2 раза меньше за музыку и кино по студенческому билету.<br><strong style="color: var(--mint-soft);">Экономия +350 ₽ каждый месяц.</strong></p>
+          <div class="cat-row" onclick="openSubModal(5)">
+            <span>Иви</span>
+            <span class="cat-price">399 ₽ <span class="cat-chevron">›</span></span>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- ==========================================================
-         ЭКРАН 6: ПРОФИЛЬ И НАСТРОЙКИ
+         ЭКРАН 6: ПРОФИЛЬ И НАСТРОЙКИ 
          ========================================================== -->
+    <!-- ЭКРАН 6: ПРОФИЛЬ И НАСТРОЙКИ -->
     <div id="screen-profile" class="screen">
       <div class="app-pad">
-        <div class="top-header">
-          <div class="page-title">Профиль и ⚙</div>
-          <button class="pill-outline-btn" style="padding: 5px 12px; font-size: 11px;" onclick="openAuthScreen('screen-login')">Выйти</button>
+        <div class="profile-top-header">
+          <div class="page-title profile-title">Профиль</div>
+          <!-- Иконка выхода из аккаунта (открытая дверь со стрелкой) -->
+          <button class="header-icon-btn" onclick="openAuthScreen('screen-login')" title="Выйти из аккаунта">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+              <polyline points="16 17 21 12 16 7"/>
+              <line x1="21" y1="12" x2="9" y2="12"/>
+            </svg>
+          </button>
         </div>
 
         <div class="avatar-circle" id="profileInitials">ОР</div>
-        <div style="text-align: center; font-weight: 700; font-size: 16px;" id="profileName">Ольга Работнова</div>
-        <div style="text-align: center; font-size: 12px; color: var(--neon-green); margin: 4px 0 18px;" id="profileSavedYear">✓ Спасено за год: 4 350 ₽</div>
+        <div class="profile-name-hidden" id="profileName" style="display:none;">Ольга Работнова</div>
+        <div class="profile-saved-sub" id="profileSavedYear">Спасено за год: 4 350 ₽</div>
 
-        <div style="font-size: 13px; color: var(--text-gray);">Мои карты (Open API и СМС)</div>
-        <div class="bank-pills">
-          <div class="bank-pill">Сбер *9012</div>
-          <div class="bank-pill">Т-Банк *4821</div>
-          <div class="bank-pill">Альфа *1104</div>
-        </div>
+        <!-- Мои карты (заполняется из JS + кнопка «+ Своя» и удаление) -->
+        <div class="sub-section-label">Мои карты</div>
+        <div id="profileCardsList" class="bank-pills"></div>
 
-        <!-- 3 переключателя -->
+        <!-- 3 одинаковых по цвету переключателя -->
         <div class="toggle-row">
-          <span>◎ Пуши за 2 дня</span>
+          <div class="toggle-left">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+            </svg>
+            <span>Пуши о списаниях</span>
+          </div>
           <div id="togPush" class="switch on" onclick="toggleSwitch(this)"></div>
         </div>
+
         <div class="toggle-row">
-          <span>◎ Таймер триалов</span>
+          <div class="toggle-left">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9"/>
+              <polyline points="12 7 12 12 15 14"/>
+            </svg>
+            <span>Таймер триалов</span>
+          </div>
           <div id="togTrial" class="switch on" onclick="toggleSwitch(this)"></div>
         </div>
+
         <div class="toggle-row">
-          <span>◎ Поиск «зомби»</span>
-          <div id="togZombie" class="switch on" onclick="toggleSwitch(this)"></div>
+          <div class="toggle-left">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+            <span>Контроль лимита</span>
+          </div>
+          <div id="togLimit" class="switch on" onclick="toggleSwitch(this)"></div>
         </div>
 
-        <div style="font-size: 15px; font-weight: 700; margin: 16px 0 12px;">⚙ Настройки</div>
-
-        <div class="slider-wrap">
-          <div class="slider-label">
-            <span>Предупреждать о списании</span>
-            <span id="lblHours">за 48 ч</span>
-          </div>
-          <input type="range" min="12" max="72" step="12" value="48" oninput="document.getElementById('lblHours').innerText = 'за ' + this.value + ' ч'" />
+        <!-- Понятные подписанные ползунки -->
+        <div class="settings-section-title">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <line x1="4" y1="8" x2="20" y2="8"/><circle cx="15" cy="8" r="2.2" fill="#0A0D14"/>
+            <line x1="4" y1="16" x2="20" y2="16"/><circle cx="9" cy="16" r="2.2" fill="#0A0D14"/>
+          </svg>
+          <span>Параметры уведомлений</span>
         </div>
 
-        <div class="slider-wrap">
-          <div class="slider-label">
-            <span>Порог «зомби-подписки»</span>
-            <span id="lblZombie">14 дн.</span>
+        <div class="slider-block">
+          <div class="slider-head">
+            <span>Напоминать о списании за</span>
+            <span id="lblHours" class="slider-val-accent">48 ч</span>
           </div>
-          <input type="range" min="7" max="30" step="7" value="14" oninput="document.getElementById('lblZombie').innerText = this.value + ' дн.'" />
+          <input id="rangeHours" class="minimal-range" type="range" min="12" max="72" step="12" value="48"
+                oninput="updateSliderUI(this, 'lblHours', ' ч')" />
+        </div>
+
+        <div class="slider-block">
+          <div class="slider-head">
+            <span>Месячный лимит на подписки</span>
+            <span id="lblLimit" class="slider-val-accent">3 000 ₽</span>
+          </div>
+          <input id="rangeLimit" class="minimal-range" type="range" min="500" max="10000" step="250" value="3000"
+                oninput="updateSliderUI(this, 'lblLimit', ' ₽', true)" />
         </div>
 
         <button id="premiumBtn" class="premium-btn" onclick="upgradePremium()">Без рекламы за 99 ₽</button>
       </div>
     </div>
 
-    <!-- Нижняя навигация (скрывается на экранах Входа и Регистрации) -->
+    <!-- ==========================================================
+         НИЖНЯЯ НАВИГАЦИЯ (Тонкие монохромные SVG-иконки + Home Bar)
+         ========================================================== -->
+    <div id="yearCalendarModal" class="tg-cal-overlay" onclick="if(event.target === this) closeYearCalendarModal()">
+      <div class="tg-cal-sheet">
+        <div class="tg-cal-grabber"></div>
+        <div class="tg-cal-header">
+          <div class="tg-year-switcher">
+            <button class="tg-year-arrow" onclick="shiftModalYear(-1)" title="Предыдущий год">‹</button>
+            <span id="tgModalYearText" class="tg-year-title">2026</span>
+            <button class="tg-year-arrow" onclick="shiftModalYear(1)" title="Следующий год">›</button>
+          </div>
+          <div class="tg-cal-actions">
+            <button class="tg-today-btn" onclick="jumpToToday(true)">Сегодня</button>
+            <button class="tg-close-btn" onclick="closeYearCalendarModal()" title="Закрыть">✕</button>
+          </div>
+        </div>
+
+        <div class="tg-cal-legend">
+          <span><i class="leg-dot red"></i> Прошедшие</span>
+          <span><i class="leg-dot green"></i> Предстоящие</span>
+        </div>
+
+        <div class="tg-weekdays">
+          <span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span>
+        </div>
+
+        <div id="tgMonthsContainer" class="tg-months-scroll"></div>
+      </div>
+    </div>
+    <div id="subFormModal" class="tg-cal-overlay" onclick="if(event.target === this) closeSubModal()">
+      <div class="sub-modal-sheet">
+        <div class="tg-cal-grabber"></div>
+        <div class="sub-modal-header">
+          <span id="subModalTitle" class="sub-modal-title">Новая подписка</span>
+          <button class="tg-close-btn" onclick="closeSubModal()" title="Закрыть">✕</button>
+        </div>
+
+        <!-- Карточка выбранного шаблона (показывается только при клике на иконку / популярное) -->
+        <div id="subPresetPreview" class="sub-preset-preview" style="display: none;">
+          <div id="subPresetIcon" class="sub-preset-icon">Я</div>
+          <div>
+            <div id="subPresetName" class="sub-preset-name">Яндекс Плюс</div>
+            <div id="subPresetPrice" class="sub-preset-price">399 ₽ / мес</div>
+          </div>
+        </div>
+
+        <!-- Поля, которые заполняются вручную в режиме "+ Свой" -->
+        <div id="subCustomFields">
+          <div class="sub-field">
+            <label class="sub-label" for="subNameInput">Название</label>
+            <input id="subNameInput" class="sub-input" type="text" placeholder="Например, ChatGPT Plus или VPN" />
+          </div>
+
+          <div class="sub-field">
+            <label class="sub-label" for="subPriceInput">Стоимость в месяц (₽)</label>
+            <input id="subPriceInput" class="sub-input" type="number" min="1" placeholder="490" />
+          </div>
+
+          <div class="sub-field">
+            <label class="sub-label" for="subLinkInput">Ссылка на сервис / отмену</label>
+            <input id="subLinkInput" class="sub-input" type="url" placeholder="https://..." />
+          </div>
+        </div>
+
+        <!-- Даты подключения и списания (видны всегда) -->
+        <div class="sub-dates-grid">
+          <div class="sub-field">
+            <label class="sub-label" for="subConnectDate">Дата подключения</label>
+            <input id="subConnectDate" class="sub-input sub-date-input" type="date" onchange="syncBillingDateFromConnect()" />
+          </div>
+          <div class="sub-field">
+            <label class="sub-label" for="subBillingDate">Дата списания</label>
+            <input id="subBillingDate" class="sub-input sub-date-input" type="date" />
+          </div>
+        </div>
+
+        <!-- Выбор карты из подключённых (виден всегда) -->
+        <div class="sub-field">
+          <label class="sub-label">Карта списания</label>
+          <div id="subCardSelector" class="sub-card-pills"></div>
+        </div>
+
+        <button class="sub-submit-btn" onclick="submitSubModal()">Добавить подписку</button>
+      </div>
+    </div>
+    <!-- МОДАЛЬНОЕ ОКНО ДОБАВЛЕНИЯ КАРТЫ (+ Своя) -->
+    <div id="cardFormModal" class="tg-cal-overlay" onclick="if(event.target === this) closeCardModal()">
+      <div class="sub-modal-sheet">
+        <div class="tg-cal-grabber"></div>
+        <div class="sub-modal-header">
+          <span class="sub-modal-title">Добавить карту</span>
+          <button class="tg-close-btn" onclick="closeCardModal()" title="Закрыть">✕</button>
+        </div>
+
+        <div class="sub-field">
+          <label class="sub-label" for="cardBankInput">Банк</label>
+          <div class="card-quick-banks">
+            <button type="button" class="card-quick-btn" onclick="pickQuickBank('Сбер')">Сбер</button>
+            <button type="button" class="card-quick-btn" onclick="pickQuickBank('Т-Банк')">Т-Банк</button>
+            <button type="button" class="card-quick-btn" onclick="pickQuickBank('Альфа')">Альфа</button>
+            <button type="button" class="card-quick-btn" onclick="pickQuickBank('ВТБ')">ВТБ</button>
+            <button type="button" class="card-quick-btn" onclick="pickQuickBank('Озон')">Озон</button>
+          </div>
+          <input id="cardBankInput" class="sub-input" type="text" placeholder="Например, Сбер или Газпромбанк" />
+        </div>
+
+        <div class="sub-field">
+          <label class="sub-label" for="cardLast4Input">Последние 4 цифры карты</label>
+          <input id="cardLast4Input" class="sub-input" type="text" inputmode="numeric" maxlength="4" placeholder="Например, 4821"
+                oninput="this.value = this.value.replace(/\D/g, '').slice(0, 4)" />
+        </div>
+
+        <div class="sub-field">
+          <label class="sub-label" for="cardNoteInput">Описание (необязательно)</label>
+          <input id="cardNoteInput" class="sub-input" type="text" placeholder="Например, Зарплатная или Для подписок" />
+        </div>
+
+        <button class="sub-submit-btn" onclick="submitCardModal()">Сохранить карту</button>
+      </div>
+    </div>
     <div id="bottomNav" class="bottom-nav">
-      <button class="nav-item active" onclick="switchTab('screen-home', 0)">
-        <span>🏠</span>
-        <span>Главная</span>
-      </button>
-      <button class="nav-item" onclick="switchTab('screen-calendar', 1)">
-        <span>📅</span>
-        <span>Календарь</span>
-      </button>
-      <button class="nav-item" onclick="switchTab('screen-templates', 2)">
-        <span>➕</span>
-        <span>Шаблоны</span>
-      </button>
-      <button class="nav-item" onclick="switchTab('screen-profile', 3)">
-        <span>👤</span>
-        <span>Профиль</span>
-      </button>
+      <div class="bottom-nav-items">
+        <button class="nav-item active" onclick="switchTab('screen-home', 0)">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 10.5L12 3l9 7.5"/>
+            <path d="M5.5 9.5V20a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1V9.5"/>
+            <path d="M9.5 21v-6a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v6"/>
+          </svg>
+          <span>Главная</span>
+        </button>
+
+        <button class="nav-item" onclick="switchTab('screen-calendar', 1)">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3.5" y="4.5" width="17" height="16.5" rx="3"/>
+            <line x1="8" y1="2.5" x2="8" y2="6"/>
+            <line x1="16" y1="2.5" x2="16" y2="6"/>
+            <line x1="3.5" y1="9.5" x2="20.5" y2="9.5"/>
+          </svg>
+          <span>Календарь</span>
+        </button>
+
+        <button class="nav-item" onclick="switchTab('screen-templates', 2)">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="4" y="4" width="11.5" height="16" rx="2.5"/>
+            <path d="M15.5 6.5h1.5a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-1.5"/>
+            <path d="M19 9h1a1.5 1.5 0 0 1 1.5 1.5v4A1.5 1.5 0 0 1 20 16h-1"/>
+          </svg>
+          <span>Шаблоны</span>
+        </button>
+
+        <button class="nav-item" onclick="switchTab('screen-profile', 3)">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="8" r="3.8"/>
+            <path d="M5 20.5c.8-3.8 3.6-6 7-6s6.2 2.2 7 6"/>
+          </svg>
+          <span>Профиль</span>
+        </button>
+      </div>
+      <div class="home-indicator"></div>
     </div>
   </div>
 
+  <script src="script.js"></script>
 </body>
 </html>
